@@ -1,0 +1,42 @@
+# Setting
+Setting=Wallpaper Setting
+settingOk=OK
+settingCancel=Cancel
+
+# Video
+videoLabel=Video
+videoBrowser=Browser
+
+# Wallpaper
+wallpaperLabel=Wallpaper
+wallpaperAutorun=Run at startup
+wallpaperMenu=Desktop right-click menu
+wallpaperExclude=Enable exclude
+
+# Wait
+waitLabel=Wait time
+
+# Mpv
+mpvLabel=Mpv
+mpvSwdec=Use software decode
+mpvAudio=Use Audio output
+
+# Stop
+stopExit=Exit
+stopClear=Clear
+
+# Exclude
+excludeLabel=Exclude
+excludeAdd=Add
+excludeDelete=Delete
+
+# Message
+information=Information
+warning=Warning
+error=Error
+done=Done.
+closeMessage=Change not saved, are you sure to close?
+stopMessage=Are you sure to clear and exit "Wallpaper"?
+stopTipText=Click "Help" to enable "Clear".
+mpvMessage=Can't find "Mpv" application.
+fileMessage=Can't find video file.
