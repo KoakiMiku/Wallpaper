@@ -73,7 +73,6 @@ namespace wallpaper
         {
             RegistryKey desktop = Registry.ClassesRoot.CreateSubKey(desktopPath);
             desktop.SetValue("", "Wallpaper(&Z)");
-            desktop.SetValue("Icon", @"%systemroot%\system32\imageres.dll,105");
             desktop.SetValue("Position", "Bottom");
             desktop.Close();
             RegistryKey command = Registry.ClassesRoot.CreateSubKey(commandPath);
