@@ -13,17 +13,13 @@ wallpaperAutorun=开机启动
 wallpaperMenu=桌面右键菜单
 wallpaperExclude=启用排除项
 
-# Wait
-waitLabel=等待时间
-
 # Mpv
 mpvLabel=Mpv
-mpvSwdec=使用软件解码
 mpvAudio=使用音频输出
 
 # Stop
-stopExit=退出
-stopClear=清理
+exitClose=退出
+exitClear=清理
 
 # Exclude
 excludeLabel=排除项
@@ -34,9 +30,9 @@ excludeDelete=删除
 information=通知
 warning=警告
 error=错误
-done=完成。
 closeMessage=修改还没有保存，确认要退出吗？
-stopMessage=确认要清理并退出“Wallpaper”吗？
+exitMessage=确认要清理并退出“Wallpaper”吗？
+exitDone=清理完成。
 stopTipText=点击“帮助”以启用“清理”。
 mpvMessage=找不到“Mpv”应用程序。
 fileMessage=找不到视频文件。

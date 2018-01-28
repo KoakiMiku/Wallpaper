@@ -19,26 +19,15 @@ namespace wallpaper
 
         private static void TimerTick(object sender, EventArgs e)
         {
-            Process[] allProcess = Process.GetProcesses();
-            int explorer = 0;
-            int mpv = 0;
-            int num = 0;
+            Process[] process = Process.GetProcesses();
+            Process[] explorer = Process.GetProcessesByName("explorer");
+            Process[] mpv = Process.GetProcessesByName("mpv");
             List<string> list = new List<string>();
-            foreach (var item in allProcess)
+            foreach (var item in process)
             {
-                if (item.ProcessName == "explorer")
-                {
-                    explorer++;
-                }
-                else if (item.ProcessName == "mpv")
-                {
-                    mpv++;
-                }
-                else
-                {
-                    list.Add(item.ProcessName);
-                }
+                list.Add(item.ProcessName);
             }
+            int num = 0;
             if (Convert.ToBoolean(RegistryEdit.GetSetting("wallpaperExclude")))
             {
                 List<string> exclude = new List<string>();
@@ -56,29 +45,21 @@ namespace wallpaper
                 }
                 num = list.Intersect(exclude).Count();
             }
-            if (explorer > 0 && mpv < 1 && num < 1)
+            if (explorer.Length > 0 && mpv.Length < 1 && num < 1)
             {
                 timer.Enabled = false;
-                string file = RegistryEdit.GetSetting("videoLocation");
-                string args = " --no-input-default-bindings --no-config --no-osc --fs --loop-file=yes";
-                if (RegistryEdit.GetSetting("mpvSwdec") == "False")
-                {
-                    args += " --hwdec=auto";
-                }
+                string file = RegistryEdit.GetSetting("videoLocation") + " --hwdec=auto --loop-file=yes";
                 if (RegistryEdit.GetSetting("mpvAudio") == "False")
                 {
-                    args += " --ao=null";
+                    file += " --ao=null";
                 }
-                Process mpvProcess = new Process();
-                mpvProcess.StartInfo.FileName = "mpv.exe";
-                mpvProcess.StartInfo.Arguments = file + args;
-                mpvProcess.Start();
-                int wait = Convert.ToInt32(RegistryEdit.GetSetting("waitLabel"));
-                System.Threading.Thread.Sleep(wait);
                 IntPtr hwndShell = WindowsApi.GetShellWindow();
                 WindowsApi.SendMessageTimeout(hwndShell, 0x52c, IntPtr.Zero, IntPtr.Zero, 0, 1000, IntPtr.Zero);
                 IntPtr hwndWorkerW = WindowsApi.GetWindow(hwndShell, 3);
-                WindowsApi.SetParent(mpvProcess.MainWindowHandle, hwndWorkerW);
+                Process newMpv = new Process();
+                newMpv.StartInfo.FileName = "mpv.exe";
+                newMpv.StartInfo.Arguments = file + " --wid=" + hwndWorkerW;
+                newMpv.Start();
                 isEnable = true;
                 timer.Enabled = true;
             }

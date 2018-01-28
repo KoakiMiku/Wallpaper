@@ -32,8 +32,6 @@ namespace wallpaper
             RegistryEdit.SetSetting(wallpaperAutorun.Name, false.ToString());
             RegistryEdit.SetSetting(wallpaperMenu.Name, false.ToString());
             RegistryEdit.SetSetting(wallpaperExclude.Name, false.ToString());
-            RegistryEdit.SetSetting(waitLabel.Name, 250.ToString());
-            RegistryEdit.SetSetting(mpvSwdec.Name, false.ToString());
             RegistryEdit.SetSetting(mpvAudio.Name, false.ToString());
         }
 
@@ -46,12 +44,10 @@ namespace wallpaper
             Language.GetText(wallpaperAutorun);
             Language.GetText(wallpaperMenu);
             Language.GetText(wallpaperExclude);
-            Language.GetText(waitLabel);
             Language.GetText(mpvLabel);
-            Language.GetText(mpvSwdec);
             Language.GetText(mpvAudio);
-            Language.GetText(stopExit);
-            Language.GetText(stopClear);
+            Language.GetText(exitClose);
+            Language.GetText(exitClear);
             Language.GetText(excludeLabel);
             Language.GetText(excludeAdd);
             Language.GetText(excludeDelete);
@@ -65,20 +61,6 @@ namespace wallpaper
             wallpaperAutorun.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperAutorun.Name));
             wallpaperMenu.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperMenu.Name));
             wallpaperExclude.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperExclude.Name));
-            string wait = RegistryEdit.GetSetting(waitLabel.Name);
-            if (wait == wait5H.Text)
-            {
-                wait5H.Checked = true;
-            }
-            else if (wait == wait1K.Text)
-            {
-                wait1K.Checked = true;
-            }
-            else
-            {
-                wait2K.Checked = true;
-            }
-            mpvSwdec.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(mpvSwdec.Name));
             mpvAudio.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(mpvAudio.Name));
             for (int i = 0; i < int.MaxValue; i++)
             {
@@ -100,10 +82,6 @@ namespace wallpaper
             wallpaperAutorun.CheckedChanged += Changed;
             wallpaperMenu.CheckedChanged += Changed;
             wallpaperExclude.CheckedChanged += Changed;
-            wait5H.CheckedChanged += Changed;
-            wait1K.CheckedChanged += Changed;
-            wait2K.CheckedChanged += Changed;
-            mpvSwdec.CheckedChanged += Changed;
             mpvAudio.CheckedChanged += Changed;
         }
 
@@ -159,15 +137,15 @@ namespace wallpaper
                 }
             }
             Wallpaper.Stop();
-            DisableAll();
+            isChanged = false;
             Close();
         }
 
         private void stopClear_Click(object sender, EventArgs e)
         {
             string warning = Language.GetString("warning");
-            string stopMessage = Language.GetString("stopMessage");
-            DialogResult dialogResult = MessageBox.Show(stopMessage, warning, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            string exitMessage = Language.GetString("exitMessage");
+            DialogResult dialogResult = MessageBox.Show(exitMessage, warning, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.OK)
             {
                 RegistryEdit.RemoveAutorun();
@@ -182,24 +160,12 @@ namespace wallpaper
                     }
                 }
                 Wallpaper.Stop();
-                DisableAll();
                 string information = Language.GetString("information");
-                string done = Language.GetString("done");
-                MessageBox.Show(done, information, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string exitDone = Language.GetString("exitDone");
+                MessageBox.Show(exitDone, information, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                isChanged = false;
                 Close();
             }
-        }
-
-        private void DisableAll()
-        {
-            videoPanel.Enabled = false;
-            wallpaperPanel.Enabled = false;
-            waitPanel.Enabled = false;
-            mpvPanel.Enabled = false;
-            stopPanel.Enabled = false;
-            excludePanel.Enabled = false;
-            settingPanel.Enabled = false;
-            isChanged = false;
         }
 
         private void settingOk_Click(object sender, EventArgs e)
@@ -223,19 +189,6 @@ namespace wallpaper
                 RegistryEdit.RemoveDesktopMenu();
             }
             RegistryEdit.SetSetting(wallpaperMenu.Name, wallpaperMenu.Checked.ToString());
-            if (wait5H.Checked)
-            {
-                RegistryEdit.SetSetting(waitLabel.Name, wait5H.Text);
-            }
-            else if (wait1K.Checked)
-            {
-                RegistryEdit.SetSetting(waitLabel.Name, wait1K.Text);
-            }
-            else
-            {
-                RegistryEdit.SetSetting(waitLabel.Name, wait2K.Text);
-            }
-            RegistryEdit.SetSetting(mpvSwdec.Name, mpvSwdec.Checked.ToString());
             RegistryEdit.SetSetting(mpvAudio.Name, mpvAudio.Checked.ToString());
             if (excludeList.Items.Count == 0)
             {
@@ -252,19 +205,19 @@ namespace wallpaper
             }
             RegistryEdit.SetSetting(wallpaperExclude.Name, wallpaperExclude.Checked.ToString());
             Wallpaper.Stop();
-            DisableAll();
+            isChanged = false;
             Close();
         }
 
         private void settingCancel_Click(object sender, EventArgs e)
         {
-            DisableAll();
+            isChanged = false;
             Close();
         }
 
         private void Setting_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            stopClear.Enabled = true;
+            exitClear.Enabled = true;
             e.Cancel = true;
         }
 
