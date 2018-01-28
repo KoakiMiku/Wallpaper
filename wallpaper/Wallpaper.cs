@@ -49,7 +49,7 @@ namespace wallpaper
             {
                 timer.Enabled = false;
                 System.Threading.Thread.Sleep(1000);
-                string file = RegistryEdit.GetSetting("videoLocation") + " --hwdec=auto --loop-file=yes";
+                string file = "\"" + RegistryEdit.GetSetting("videoLocation") + "\" --hwdec=auto --loop-file=yes";
                 if (RegistryEdit.GetSetting("mpvAudio") == "False")
                 {
                     file += " --ao=null";
