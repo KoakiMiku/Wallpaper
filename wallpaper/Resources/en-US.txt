@@ -8,14 +8,10 @@ videoLabel=Video
 videoBrowser=Browser
 
 # Wallpaper
-wallpaperLabel=Wallpaper
+wallpaperLabel=General
 wallpaperAutorun=Run at startup
-wallpaperMenu=Desktop right-click menu
+wallpaperMenu=Desktop menu
 wallpaperExclude=Enable exclude
-
-# Mpv
-mpvLabel=Mpv
-mpvAudio=Use Audio output
 
 # Stop
 exitClose=Exit

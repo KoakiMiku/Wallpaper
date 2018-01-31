@@ -32,7 +32,6 @@ namespace wallpaper
             RegistryEdit.SetSetting(wallpaperAutorun.Name, false.ToString());
             RegistryEdit.SetSetting(wallpaperMenu.Name, false.ToString());
             RegistryEdit.SetSetting(wallpaperExclude.Name, false.ToString());
-            RegistryEdit.SetSetting(mpvAudio.Name, false.ToString());
         }
 
         private void LoadText()
@@ -44,8 +43,6 @@ namespace wallpaper
             Language.GetText(wallpaperAutorun);
             Language.GetText(wallpaperMenu);
             Language.GetText(wallpaperExclude);
-            Language.GetText(mpvLabel);
-            Language.GetText(mpvAudio);
             Language.GetText(exitClose);
             Language.GetText(exitClear);
             Language.GetText(excludeLabel);
@@ -61,7 +58,6 @@ namespace wallpaper
             wallpaperAutorun.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperAutorun.Name));
             wallpaperMenu.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperMenu.Name));
             wallpaperExclude.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperExclude.Name));
-            mpvAudio.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(mpvAudio.Name));
             for (int i = 0; i < int.MaxValue; i++)
             {
                 try
@@ -82,7 +78,6 @@ namespace wallpaper
             wallpaperAutorun.CheckedChanged += Changed;
             wallpaperMenu.CheckedChanged += Changed;
             wallpaperExclude.CheckedChanged += Changed;
-            mpvAudio.CheckedChanged += Changed;
         }
 
         private void Changed(object sender, EventArgs e)
@@ -189,7 +184,6 @@ namespace wallpaper
                 RegistryEdit.RemoveDesktopMenu();
             }
             RegistryEdit.SetSetting(wallpaperMenu.Name, wallpaperMenu.Checked.ToString());
-            RegistryEdit.SetSetting(mpvAudio.Name, mpvAudio.Checked.ToString());
             if (excludeList.Items.Count == 0)
             {
                 wallpaperExclude.Checked = false;

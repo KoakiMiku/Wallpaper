@@ -49,17 +49,14 @@ namespace wallpaper
             {
                 timer.Enabled = false;
                 System.Threading.Thread.Sleep(1000);
-                string file = "\"" + RegistryEdit.GetSetting("videoLocation") + "\" --hwdec=auto --loop-file=yes";
-                if (!Convert.ToBoolean(RegistryEdit.GetSetting("mpvAudio")))
-                {
-                    file += " --ao=null";
-                }
+                string file = "\"" + RegistryEdit.GetSetting("videoLocation") + "\"";
+                string args = " --hwdec=auto --ao=null --loop-file=yes";
                 IntPtr hwndShell = WindowsApi.GetShellWindow();
                 WindowsApi.SendMessageTimeout(hwndShell, 0x52c, IntPtr.Zero, IntPtr.Zero, 0, 1000, IntPtr.Zero);
                 IntPtr hwndWorkerW = WindowsApi.GetWindow(hwndShell, 3);
                 Process newMpv = new Process();
                 newMpv.StartInfo.FileName = "mpv.exe";
-                newMpv.StartInfo.Arguments = file + " --wid=" + hwndWorkerW;
+                newMpv.StartInfo.Arguments = file + args + " --wid=" + hwndWorkerW;
                 newMpv.Start();
                 isEnable = true;
                 timer.Enabled = true;

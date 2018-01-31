@@ -8,14 +8,10 @@ videoLabel=视频
 videoBrowser=浏览
 
 # Wallpaper
-wallpaperLabel=Wallpaper
+wallpaperLabel=通用
 wallpaperAutorun=开机启动
 wallpaperMenu=桌面右键菜单
 wallpaperExclude=启用排除项
-
-# Mpv
-mpvLabel=Mpv
-mpvAudio=使用音频输出
 
 # Stop
 exitClose=退出
