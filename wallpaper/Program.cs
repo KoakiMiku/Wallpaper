@@ -7,7 +7,6 @@ namespace wallpaper
 {
     static class Program
     {
-
         [STAThread]
 
         static void Main(string[] args)
