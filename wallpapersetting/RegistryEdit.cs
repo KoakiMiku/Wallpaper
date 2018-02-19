@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
-using System.Diagnostics;
+using System;
 
-namespace wallpaper
+namespace wallpapersetting
 {
     class RegistryEdit
     {
@@ -9,7 +9,11 @@ namespace wallpaper
         static readonly string excludeListPath = @"Software\Wallpaper\ExcludeList";
         static readonly string autorunPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
         static readonly string desktopPath = @"DesktopBackground\Shell\Wallpaper";
-        static readonly string commandPath = @"DesktopBackground\Shell\Wallpaper\command";
+        static readonly string shellPath = @"DesktopBackground\Shell\Wallpaper\Shell";
+        static readonly string openPath = @"DesktopBackground\Shell\Wallpaper\Shell\Open";
+        static readonly string openCmdPath = @"DesktopBackground\Shell\Wallpaper\Shell\Open\command";
+        static readonly string setupPath = @"DesktopBackground\Shell\Wallpaper\Shell\Setting";
+        static readonly string setupCmdPath = @"DesktopBackground\Shell\Wallpaper\Shell\Setting\command";
 
         public static bool CheckSetting()
         {
@@ -65,19 +69,8 @@ namespace wallpaper
         public static void SetAutorun()
         {
             RegistryKey autorun = Registry.CurrentUser.OpenSubKey(autorunPath, true);
-            autorun.SetValue("Wallpaper", Process.GetCurrentProcess().MainModule.FileName);
+            autorun.SetValue("Wallpaper", Environment.CurrentDirectory + @"\wallpaper.exe");
             autorun.Close();
-        }
-
-        public static void SetDesktopMenu()
-        {
-            RegistryKey desktop = Registry.ClassesRoot.CreateSubKey(desktopPath);
-            desktop.SetValue("", "Wallpaper(&Z)");
-            desktop.SetValue("Position", "Bottom");
-            desktop.Close();
-            RegistryKey command = Registry.ClassesRoot.CreateSubKey(commandPath);
-            command.SetValue("", Process.GetCurrentProcess().MainModule.FileName);
-            command.Close();
         }
 
         public static void RemoveAutorun()
@@ -85,6 +78,29 @@ namespace wallpaper
             RegistryKey autoRun = Registry.CurrentUser.OpenSubKey(autorunPath, true);
             autoRun.DeleteValue("Wallpaper", false);
             autoRun.Close();
+        }
+
+        public static void SetDesktopMenu()
+        {
+            RegistryKey desktop = Registry.ClassesRoot.CreateSubKey(desktopPath);
+            desktop.SetValue("MUIVerb", "Wallpaper(&Z)");
+            desktop.SetValue("Position", "Bottom");
+            desktop.SetValue("SubCommands", "");
+            desktop.Close();
+            RegistryKey shell = Registry.ClassesRoot.CreateSubKey(shellPath);
+            shell.Close();
+            RegistryKey open = Registry.ClassesRoot.CreateSubKey(openPath);
+            open.SetValue("", Language.GetString("Open") + "(&O)");
+            open.Close();
+            RegistryKey openCmd = Registry.ClassesRoot.CreateSubKey(openCmdPath);
+            openCmd.SetValue("", Environment.CurrentDirectory + @"\wallpaper.exe");
+            openCmd.Close();
+            RegistryKey setup = Registry.ClassesRoot.CreateSubKey(setupPath);
+            setup.SetValue("", Language.GetString("Setting") + "(&Z)");
+            setup.Close();
+            RegistryKey setupCmd = Registry.ClassesRoot.CreateSubKey(setupCmdPath);
+            setupCmd.SetValue("", Environment.CurrentDirectory + @"\wallpapersetting.exe");
+            setupCmd.Close();
         }
 
         public static void RemoveDesktopMenu()

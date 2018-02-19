@@ -1,4 +1,4 @@
-﻿namespace wallpaper
+﻿namespace wallpapersetting
 {
     partial class Setting
     {

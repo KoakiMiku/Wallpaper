@@ -1,10 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace wallpaper
+namespace wallpapersetting
 {
     public partial class Setting : Form
     {
@@ -123,41 +122,20 @@ namespace wallpaper
 
         private void stopClose_Click(object sender, EventArgs e)
         {
-            Process[] process = Process.GetProcesses();
-            foreach (var item in process)
-            {
-                if (item.ProcessName == "wallpaper" && item.MainWindowHandle != Handle)
-                {
-                    item.Kill();
-                }
-            }
-            Wallpaper.Stop();
+            Control.Stop();
             isChanged = false;
             Close();
         }
 
         private void stopClear_Click(object sender, EventArgs e)
         {
-            string warning = Language.GetString("warning");
-            string exitMessage = Language.GetString("exitMessage");
-            DialogResult dialogResult = MessageBox.Show(exitMessage, warning, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-            if (dialogResult == DialogResult.OK)
+            if (Message.ExitMessage() == DialogResult.OK)
             {
                 RegistryEdit.RemoveAutorun();
                 RegistryEdit.RemoveDesktopMenu();
                 RegistryEdit.RemoveSetting();
-                Process[] process = Process.GetProcesses();
-                foreach (var item in process)
-                {
-                    if (item.ProcessName == "wallpaper" && item.MainWindowHandle != Handle)
-                    {
-                        item.Kill();
-                    }
-                }
-                Wallpaper.Stop();
-                string information = Language.GetString("information");
-                string exitDone = Language.GetString("exitDone");
-                MessageBox.Show(exitDone, information, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Control.Stop();
+                Message.ExitDone();
                 isChanged = false;
                 Close();
             }
@@ -198,7 +176,7 @@ namespace wallpaper
                 }
             }
             RegistryEdit.SetSetting(wallpaperExclude.Name, wallpaperExclude.Checked.ToString());
-            Wallpaper.Stop();
+            Control.Restart();
             isChanged = false;
             Close();
         }
@@ -219,10 +197,7 @@ namespace wallpaper
         {
             if (isChanged)
             {
-                string information = Language.GetString("information");
-                string closeMessage = Language.GetString("closeMessage");
-                DialogResult dialogResult = MessageBox.Show(closeMessage, information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                if (dialogResult != DialogResult.OK)
+                if (Message.CloseMessage() != DialogResult.OK)
                 {
                     e.Cancel = true;
                 }

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Windows.Forms;
 
-namespace wallpaper
+namespace wallpapersetting
 {
     class Language
     {
@@ -51,6 +52,15 @@ namespace wallpaper
             {
                 return value;
             }
+        }
+
+        public static void GetText(System.Windows.Forms.Control control)
+        {
+            try
+            {
+                control.Text = dictionary[control.Name];
+            }
+            catch (Exception) { }
         }
     }
 }

@@ -1,0 +1,34 @@
+# Setting
+Setting=Wallpaper Setting
+settingOk=OK
+settingCancel=Cancel
+
+# Video
+videoLabel=Video
+videoBrowser=Browser
+
+# Wallpaper
+wallpaperLabel=General
+wallpaperAutorun=Run at startup
+wallpaperMenu=Desktop menu
+wallpaperExclude=Enable exclude
+
+# Stop
+exitClose=Exit
+exitClear=Cleanup
+
+# Exclude
+excludeLabel=Exclude
+excludeAdd=Add
+excludeDelete=Delete
+
+# Message
+information=Information
+warning=Warning
+closeMessage=Change not saved, are you sure to close?
+exitMessage=Are you sure to clear and exit "Wallpaper"?
+exitDone=Cleanup completed.
+stopTipText=Click "Help" to enable "Clear".
+
+# Menu
+Open=Wallpaper

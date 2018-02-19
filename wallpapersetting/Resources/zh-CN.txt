@@ -1,0 +1,34 @@
+# Setting
+Setting=Wallpaper设置
+settingOk=确定
+settingCancel=取消
+
+# Video
+videoLabel=视频
+videoBrowser=浏览
+
+# Wallpaper
+wallpaperLabel=通用
+wallpaperAutorun=开机启动
+wallpaperMenu=桌面右键菜单
+wallpaperExclude=启用排除项
+
+# Stop
+exitClose=退出
+exitClear=清理
+
+# Exclude
+excludeLabel=排除项
+excludeAdd=添加
+excludeDelete=删除
+
+# Message
+information=通知
+warning=警告
+closeMessage=修改还没有保存，确认要退出吗？
+exitMessage=确认要清理并退出“Wallpaper”吗？
+exitDone=清理完成。
+stopTipText=点击“帮助”以启用“清理”。
+
+# Menu
+Open=Wallpaper
