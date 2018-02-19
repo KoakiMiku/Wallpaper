@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace wallpapersetting
@@ -8,18 +9,16 @@ namespace wallpapersetting
         [STAThread]
         static void Main()
         {
-            if(Control.isSingle("wallpapersetting"))
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Environment.CurrentDirectory = Application.StartupPath;
-                Language.Initialize();
-                Application.Run(new Setting());
-            }
-            else
+            Process[] process = Process.GetProcessesByName("wallpapersetting");
+            if (process.Length > 1)
             {
                 return;
             }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Environment.CurrentDirectory = Application.StartupPath;
+            Language.Initialize();
+            Application.Run(new Setting());
         }
     }
 }

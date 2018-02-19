@@ -122,20 +122,25 @@ namespace wallpapersetting
 
         private void stopClose_Click(object sender, EventArgs e)
         {
-            Control.Stop();
+            Wallpaper.Stop();
             isChanged = false;
             Close();
         }
 
         private void stopClear_Click(object sender, EventArgs e)
         {
-            if (Message.ExitMessage() == DialogResult.OK)
+            string warning = Language.GetString("warning");
+            string exitMessage = Language.GetString("exitMessage");
+            DialogResult dialogResult = MessageBox.Show(exitMessage, warning, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.OK)
             {
                 RegistryEdit.RemoveAutorun();
                 RegistryEdit.RemoveDesktopMenu();
                 RegistryEdit.RemoveSetting();
-                Control.Stop();
-                Message.ExitDone();
+                Wallpaper.Stop();
+                string information = Language.GetString("information");
+                string exitDone = Language.GetString("exitDone");
+                MessageBox.Show(exitDone, information, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 isChanged = false;
                 Close();
             }
@@ -176,7 +181,7 @@ namespace wallpapersetting
                 }
             }
             RegistryEdit.SetSetting(wallpaperExclude.Name, wallpaperExclude.Checked.ToString());
-            Control.Restart();
+            Wallpaper.Restart();
             isChanged = false;
             Close();
         }
@@ -197,7 +202,10 @@ namespace wallpapersetting
         {
             if (isChanged)
             {
-                if (Message.CloseMessage() != DialogResult.OK)
+                string information = Language.GetString("information");
+                string closeMessage = Language.GetString("closeMessage");
+                DialogResult dialogResult = MessageBox.Show(closeMessage, information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (dialogResult != DialogResult.OK)
                 {
                     e.Cancel = true;
                 }

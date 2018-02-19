@@ -35,6 +35,8 @@ namespace wallpaper
 
         private static void TimerTick(object sender, EventArgs e)
         {
+            Process[] explorer = Process.GetProcessesByName("explorer");
+            Process[] mpv = Process.GetProcessesByName("mpv");
             Process[] process = Process.GetProcesses();
             List<string> list = new List<string>();
             foreach (var item in process)
@@ -42,14 +44,19 @@ namespace wallpaper
                 list.Add(item.ProcessName);
             }
             int excludeNum = list.Intersect(exclude).Count();
-            if (Control.ProcessNum("explorer") > 0 && Control.ProcessNum("mpv") < 1 && excludeNum < 1)
+            if (explorer.Length > 0 && mpv.Length < 1 && excludeNum < 1)
             {
                 timer.Enabled = false;
                 System.Threading.Thread.Sleep(1000);
                 IntPtr hwndShell = WindowsApi.GetShellWindow();
                 WindowsApi.SendMessageTimeout(hwndShell, 0x52c, IntPtr.Zero, IntPtr.Zero, 0, 1000, IntPtr.Zero);
                 IntPtr hwndWorkerW = WindowsApi.GetWindow(hwndShell, 3);
-                Control.Start(hwndWorkerW);
+                string file = "\"" + RegistryGet.GetSetting("videoLocation") + "\"";
+                string args = " --hwdec=auto --ao=null --loop-file=yes";
+                Process newMpv = new Process();
+                newMpv.StartInfo.FileName = "mpv.exe";
+                newMpv.StartInfo.Arguments = file + args + " --wid=" + hwndWorkerW;
+                newMpv.Start();
                 isEnable = true;
                 timer.Enabled = true;
             }
@@ -58,11 +65,19 @@ namespace wallpaper
                 timer.Enabled = false;
                 if (isEnable)
                 {
-                    Control.Stop();
+                    Stop();
                     isEnable = false;
                 }
                 timer.Enabled = true;
             }
+        }
+
+        public static void Stop()
+        {
+            IntPtr hwndShell = WindowsApi.GetShellWindow();
+            IntPtr hwndWorkerW = WindowsApi.GetWindow(hwndShell, 3);
+            IntPtr hwndMpv = WindowsApi.GetWindow(hwndWorkerW, 5);
+            WindowsApi.SendMessage(hwndMpv, 0x0010, 0, 0);
         }
     }
 }
