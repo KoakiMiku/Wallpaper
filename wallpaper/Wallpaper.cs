@@ -29,6 +29,7 @@ namespace wallpaper
                     }
                 }
             }
+            timer.Interval = 1000;
             timer.Tick += TimerTick;
             timer.Enabled = true;
         }

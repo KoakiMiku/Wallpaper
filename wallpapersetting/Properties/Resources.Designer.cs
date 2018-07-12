@@ -129,6 +129,9 @@ namespace wallpapersetting.Properties {
         ///exitMessage=确认要清理并退出“Wallpaper”吗？
         ///exitDone=清理完成。
         ///stopTipText=点击“帮助”以启用“清理”。
+        ///
+        ///# Menu
+        ///Open=Wallpaper
         /// 的本地化字符串。
         /// </summary>
         internal static string zh_CN {

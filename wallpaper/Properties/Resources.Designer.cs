@@ -61,30 +61,10 @@ namespace wallpaper.Properties {
         }
         
         /// <summary>
-        ///   查找类似 # Setting
-        ///Setting=Wallpaper Setting
-        ///settingOk=Ok
-        ///settingApply=Apply
-        ///settingCancel=Cancel
-        ///
-        ///# Video
-        ///videoLabel=Video
-        ///videoBrowser=Browser
-        ///
-        ///# Wallpaper
-        ///wallpaperLabel=Wallpaper
-        ///wallpaperAutorun=Run at startup
-        ///wallpaperMenu=Desktop right-click menu
-        ///
-        ///# Mpv
-        ///mpvLabel=Mpv
-        ///mpvSwdec=Use software decode
-        ///mpvAudio=Use Audio output
-        ///
-        ///# Exclude
-        ///excludeLabel=Exclude
-        ///excludeAdd=Add
-        ///excludeDelete=Delete
+        ///   查找类似 # Message
+        ///error=Error
+        ///mpvMessage=Can&apos;t find &quot;Mpv&quot; application.
+        ///fileMessage=Can&apos;t find video file.
         /// 的本地化字符串。
         /// </summary>
         internal static string en_US {
@@ -94,30 +74,10 @@ namespace wallpaper.Properties {
         }
         
         /// <summary>
-        ///   查找类似 # Setting
-        ///Setting=Wallpaper设置
-        ///settingOk=确定
-        ///settingApply=应用
-        ///settingCancel=取消
-        ///
-        ///# Video
-        ///videoLabel=视频
-        ///videoBrowser=浏览
-        ///
-        ///# Wallpaper
-        ///wallpaperLabel=Wallpaper
-        ///wallpaperAutorun=开机启动
-        ///wallpaperMenu=桌面右键菜单
-        ///
-        ///# Mpv
-        ///mpvLabel=Mpv
-        ///mpvSwdec=使用软件解码
-        ///mpvAudio=使用音频输出
-        ///
-        ///# Exclude
-        ///excludeLabel=排除
-        ///excludeAdd=添加
-        ///excludeDelete=删除
+        ///   查找类似 # Message
+        ///error=错误
+        ///mpvMessage=找不到“Mpv”应用程序。
+        ///fileMessage=找不到视频文件。
         /// 的本地化字符串。
         /// </summary>
         internal static string zh_CN {
