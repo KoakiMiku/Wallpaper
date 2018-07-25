@@ -21,9 +21,8 @@ namespace wallpaper
             Language.Initialize();
             if (!File.Exists("mpv.exe"))
             {
-                string mpvMessage = Language.GetString("mpvMessage");
-                string error = Language.GetString("error");
-                MessageBox.Show(mpvMessage, error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Language.GetString("mpvMessage"), Language.GetString("error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -36,9 +35,8 @@ namespace wallpaper
                     }
                     else
                     {
-                        string fileMessage = Language.GetString("fileMessage");
-                        string error = Language.GetString("error");
-                        MessageBox.Show(fileMessage, error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Language.GetString("fileMessage"), Language.GetString("error"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception)

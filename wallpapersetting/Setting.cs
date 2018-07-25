@@ -2,13 +2,12 @@
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace wallpapersetting
 {
     public partial class Setting : Form
     {
-        bool isChanged = false;
-
         public Setting()
         {
             InitializeComponent();
@@ -31,6 +30,7 @@ namespace wallpapersetting
             RegistryEdit.SetSetting(wallpaperAutorun.Name, false.ToString());
             RegistryEdit.SetSetting(wallpaperMenu.Name, false.ToString());
             RegistryEdit.SetSetting(wallpaperExclude.Name, false.ToString());
+            RegistryEdit.SetSetting(excludeList.Name, string.Empty);
         }
 
         private void LoadText()
@@ -49,6 +49,8 @@ namespace wallpapersetting
             Language.GetText(excludeDelete);
             Language.GetText(settingOk);
             Language.GetText(settingCancel);
+            videoDialog.Filter = Language.GetString("videoFilter");
+            excludeDialog.Filter = Language.GetString("excludeFilter");
         }
 
         private void LoadSetting()
@@ -57,17 +59,9 @@ namespace wallpapersetting
             wallpaperAutorun.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperAutorun.Name));
             wallpaperMenu.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperMenu.Name));
             wallpaperExclude.Checked = Convert.ToBoolean(RegistryEdit.GetSetting(wallpaperExclude.Name));
-            for (int i = 0; i < int.MaxValue; i++)
+            if (!string.IsNullOrWhiteSpace(RegistryEdit.GetSetting(excludeList.Name)))
             {
-                try
-                {
-                    string item = RegistryEdit.GetExcludeList(i.ToString());
-                    excludeList.Items.Add(item);
-                }
-                catch (Exception)
-                {
-                    break;
-                }
+                excludeList.Items.AddRange(RegistryEdit.GetSetting(excludeList.Name).Split('|'));
             }
         }
 
@@ -82,7 +76,6 @@ namespace wallpapersetting
         private void Changed(object sender, EventArgs e)
         {
             settingOk.Enabled = true;
-            isChanged = true;
         }
 
         private void videoBrowser_Click(object sender, EventArgs e)
@@ -123,25 +116,23 @@ namespace wallpapersetting
         private void stopClose_Click(object sender, EventArgs e)
         {
             Wallpaper.Stop();
-            isChanged = false;
+            settingOk.Enabled = false;
             Close();
         }
 
         private void stopClear_Click(object sender, EventArgs e)
         {
-            string warning = Language.GetString("warning");
-            string exitMessage = Language.GetString("exitMessage");
-            DialogResult dialogResult = MessageBox.Show(exitMessage, warning, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            DialogResult dialogResult = MessageBox.Show(Language.GetString("exitMessage"), Language.GetString("warning"),
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.OK)
             {
                 RegistryEdit.RemoveAutorun();
                 RegistryEdit.RemoveDesktopMenu();
                 RegistryEdit.RemoveSetting();
                 Wallpaper.Stop();
-                string information = Language.GetString("information");
-                string exitDone = Language.GetString("exitDone");
-                MessageBox.Show(exitDone, information, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                isChanged = false;
+                MessageBox.Show(Language.GetString("exitDone"), Language.GetString("information"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                settingOk.Enabled = false;
                 Close();
             }
         }
@@ -170,25 +161,22 @@ namespace wallpapersetting
             if (excludeList.Items.Count == 0)
             {
                 wallpaperExclude.Checked = false;
-                RegistryEdit.RemoveExcludeList();
+                RegistryEdit.SetSetting(excludeList.Name, string.Empty);
             }
             else
             {
-                RegistryEdit.RemoveExcludeList();
-                for (int i = 0; i < excludeList.Items.Count; i++)
-                {
-                    RegistryEdit.SetExcludeList(i.ToString(), excludeList.Items[i].ToString());
-                }
+                string exclude = string.Join("|", excludeList.Items.Cast<string>());
+                RegistryEdit.SetSetting(excludeList.Name, exclude);
             }
             RegistryEdit.SetSetting(wallpaperExclude.Name, wallpaperExclude.Checked.ToString());
             Wallpaper.Restart();
-            isChanged = false;
+            settingOk.Enabled = false;
             Close();
         }
 
         private void settingCancel_Click(object sender, EventArgs e)
         {
-            isChanged = false;
+            settingOk.Enabled = false;
             Close();
         }
 
@@ -200,11 +188,10 @@ namespace wallpapersetting
 
         private void Setting_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (isChanged)
+            if (settingOk.Enabled)
             {
-                string information = Language.GetString("information");
-                string closeMessage = Language.GetString("closeMessage");
-                DialogResult dialogResult = MessageBox.Show(closeMessage, information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                DialogResult dialogResult = MessageBox.Show(Language.GetString("closeMessage"), Language.GetString("information"),
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (dialogResult != DialogResult.OK)
                 {
                     e.Cancel = true;

@@ -6,6 +6,7 @@ settingCancel=取消
 # Video
 videoLabel=视频
 videoBrowser=浏览
+videoFilter=视频文件|*.mp4
 
 # Wallpaper
 wallpaperLabel=通用
@@ -21,6 +22,7 @@ exitClear=清理
 excludeLabel=排除项
 excludeAdd=添加
 excludeDelete=删除
+excludeFilter=应用程序|*.exe
 
 # Message
 information=通知

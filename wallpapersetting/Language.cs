@@ -54,7 +54,7 @@ namespace wallpapersetting
             }
         }
 
-        public static void GetText(System.Windows.Forms.Control control)
+        public static void GetText(Control control)
         {
             try
             {

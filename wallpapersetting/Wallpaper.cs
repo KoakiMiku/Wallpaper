@@ -18,19 +18,18 @@ namespace wallpapersetting
             IntPtr hwndShell = WindowsApi.GetShellWindow();
             IntPtr hwndWorkerW = WindowsApi.GetWindow(hwndShell, 3);
             IntPtr hwndMpv = WindowsApi.GetWindow(hwndWorkerW, 5);
-            WindowsApi.SendMessage(hwndMpv, 0x0010, 0, 0);
+            if (hwndMpv != IntPtr.Zero)
+            {
+                WindowsApi.SendMessage(hwndMpv, 0x0010, 0, 0);
+            }
         }
 
         public static void Restart()
         {
-            Process[] process = Process.GetProcessesByName("wallpaper");
-            if (process.Length > 0)
-            {
-                Stop();
-                Process wallpaper = new Process();
-                wallpaper.StartInfo.FileName = "wallpaper.exe";
-                wallpaper.Start();
-            }
+            Stop();
+            Process wallpaper = new Process();
+            wallpaper.StartInfo.FileName = "wallpaper.exe";
+            wallpaper.Start();
         }
     }
 }

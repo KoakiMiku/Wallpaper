@@ -1,4 +1,4 @@
 # Message
 error=Error
-mpvMessage=Can't find "Mpv" application.
+mpvMessage=Can't find Mpv application.
 fileMessage=Can't find video file.

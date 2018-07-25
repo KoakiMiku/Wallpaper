@@ -266,14 +266,6 @@
             this.wallpaperExclude.UseVisualStyleBackColor = true;
             this.wallpaperExclude.CheckedChanged += new System.EventHandler(this.wallpaperExclude_CheckedChanged);
             // 
-            // videoDialog
-            // 
-            this.videoDialog.Filter = "mp4|*.mp4";
-            // 
-            // excludeDialog
-            // 
-            this.excludeDialog.Filter = "exe|*.exe";
-            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);

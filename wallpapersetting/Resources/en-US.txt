@@ -6,6 +6,7 @@ settingCancel=Cancel
 # Video
 videoLabel=Video
 videoBrowser=Browser
+videoFilter=Video File|*.mp4
 
 # Wallpaper
 wallpaperLabel=General
@@ -21,6 +22,7 @@ exitClear=Cleanup
 excludeLabel=Exclude
 excludeAdd=Add
 excludeDelete=Delete
+excludeFilter=Application|*.exe
 
 # Message
 information=Information

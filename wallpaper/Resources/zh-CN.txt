@@ -1,4 +1,4 @@
 # Message
 error=错误
-mpvMessage=找不到“Mpv”应用程序。
+mpvMessage=找不到 Mpv 应用程序。
 fileMessage=找不到视频文件。
